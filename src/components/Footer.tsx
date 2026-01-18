@@ -1,6 +1,7 @@
 import { ShieldCheck, Mail, Phone } from "lucide-react";
 import { useProgramName } from "@/hooks/useProgramName";
 import { useWhatsAppNumber, formatWhatsAppNumber } from "@/hooks/useWhatsAppNumber";
+import { trackMetaLead } from "@/lib/metaPixel";
 
 export const Footer = () => {
   const { programName } = useProgramName();
@@ -53,6 +54,7 @@ export const Footer = () => {
                   href={`https://wa.me/${whatsappNumber}`}
                   target="_blank"
                   rel="noreferrer noopener"
+                  onClick={() => trackMetaLead()}
                   className="flex items-center gap-2 hover:text-primary transition-colors"
                 >
                   <Phone className="w-4 h-4" />
@@ -87,7 +89,7 @@ export const Footer = () => {
             © {new Date().getFullYear()} QualificaBrasil. Todos os direitos reservados.
           </p>
           <p className="mt-2">
-            CNPJ: 00.000.000/0001-00 | Cursos Livres conforme Lei nº 9.394/96 e Decreto Presidencial nº 5.154/04
+            Cursos Livres conforme Lei nº 9.394/96 e Decreto Presidencial nº 5.154/04
           </p>
         </div>
       </div>

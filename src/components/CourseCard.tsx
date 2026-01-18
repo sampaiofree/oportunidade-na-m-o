@@ -7,7 +7,7 @@ interface CourseCardProps {
   title: string;
   description: string;
   duration: string;
-  category: "admin" | "beleza";
+  category?: "admin" | "beleza" | "geral";
   image: string;
   highlight?: string;
 }
@@ -22,14 +22,17 @@ export const CourseCard = ({
 }: CourseCardProps) => {
   const { cityName } = useCity();
   const { programName } = useProgramName();
+  const categoryKey = category ?? "geral";
   const categoryColors = {
     admin: "bg-white text-trust border-trust/20",
     beleza: "bg-pink-100 text-pink-600 border-pink-200",
+    geral: "bg-muted text-muted-foreground border-border",
   };
 
   const categoryLabels = {
     admin: "Administração",
     beleza: "Beleza",
+    geral: "Curso",
   };
 
   return (
@@ -46,8 +49,8 @@ export const CourseCard = ({
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
         />
         <div className="absolute top-3 left-3">
-          <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${categoryColors[category]}`}>
-            {categoryLabels[category]}
+          <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${categoryColors[categoryKey]}`}>
+            {categoryLabels[categoryKey]}
           </span>
         </div>
       </div>

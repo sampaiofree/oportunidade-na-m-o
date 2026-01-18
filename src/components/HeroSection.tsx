@@ -69,7 +69,7 @@ export const HeroSection = ({ onCountdownEnd }: HeroSectionProps) => {
             <div className="animate-slide-up">
               {/* Main headline */}
               <h1 className="mb-4 space-y-1">
-                <span className="block text-2xl md:text-3xl font-bold tracking-tight text-foreground">
+                <span className="block font-bold tracking-tight text-foreground">
                   Atenção
                 </span>
                 <ShrinkToFit

@@ -10,6 +10,7 @@ import { FinalCTASection } from "@/components/FinalCTASection";
 import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { MicroCompromise } from "@/components/MicroCompromise";
+import { trackMetaLead } from "@/lib/metaPixel";
 
 const Index = () => {
   const [selectedArea, setSelectedArea] = useState<string | null>(null);
@@ -34,6 +35,7 @@ const Index = () => {
     setSelectedArea(area); // Still useful to visually track the selected button
     const message = `Olá! Vi o anúncio do ${programName} e tenho interesse na bolsa para a área de ${area}.`;
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+    trackMetaLead();
     window.open(whatsappUrl, '_blank');
   };
 

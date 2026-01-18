@@ -3,6 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { MetaPixelLoader } from "@/components/MetaPixelLoader";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
@@ -14,6 +15,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <MetaPixelLoader />
         <Routes>
           <Route path="/" element={<Navigate to="/cidade/sua-cidade" replace />} />
           <Route path="/cidade" element={<Navigate to="/cidade/sua-cidade" replace />} />
