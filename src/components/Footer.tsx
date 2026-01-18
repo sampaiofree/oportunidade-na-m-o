@@ -1,6 +1,14 @@
 import { ShieldCheck, Mail, Phone } from "lucide-react";
+import { useProgramName } from "@/hooks/useProgramName";
+import { useWhatsAppNumber, formatWhatsAppNumber } from "@/hooks/useWhatsAppNumber";
 
 export const Footer = () => {
+  const { programName } = useProgramName();
+  const { whatsappNumber } = useWhatsAppNumber();
+  const formattedWhatsApp = formatWhatsAppNumber(whatsappNumber);
+  const words = programName.split(" ");
+  const highlighted = words.pop() ?? programName;
+  const leading = words.join(" ");
   return (
     <footer className="bg-foreground text-background py-12">
       <div className="container mx-auto px-4">
@@ -8,7 +16,12 @@ export const Footer = () => {
           {/* Brand */}
           <div>
             <h3 className="text-2xl font-bold mb-4">
-              Qualifica<span className="text-primary">Brasil</span>
+              {leading && (
+                <>
+                  {leading}{" "}
+                </>
+              )}
+              <span className="text-primary">{highlighted}</span>
             </h3>
             <p className="text-background/70 text-sm leading-relaxed">
               Programa Nacional de Qualificação Profissional. 
@@ -35,9 +48,16 @@ export const Footer = () => {
                 <Mail className="w-4 h-4" />
                 <span>contato@qualificabrasil.com.br</span>
               </li>
-              <li className="flex items-center gap-2">
-                <Phone className="w-4 h-4" />
-                <span>WhatsApp: (11) 99999-9999</span>
+              <li>
+                <a
+                  href={`https://wa.me/${whatsappNumber}`}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="flex items-center gap-2 hover:text-primary transition-colors"
+                >
+                  <Phone className="w-4 h-4" />
+                  <span>WhatsApp: {formattedWhatsApp || `+${whatsappNumber}`}</span>
+                </a>
               </li>
             </ul>
           </div>

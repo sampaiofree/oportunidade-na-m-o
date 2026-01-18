@@ -1,5 +1,7 @@
 import { Clock, Star, TrendingUp } from "lucide-react";
 import { WhatsAppButton } from "./WhatsAppButton";
+import { useCity } from "@/hooks/useCity";
+import { useProgramName } from "@/hooks/useProgramName";
 
 interface CourseCardProps {
   title: string;
@@ -18,8 +20,10 @@ export const CourseCard = ({
   image,
   highlight,
 }: CourseCardProps) => {
+  const { cityName } = useCity();
+  const { programName } = useProgramName();
   const categoryColors = {
-    admin: "bg-trust/10 text-trust border-trust/20",
+    admin: "bg-white text-trust border-trust/20",
     beleza: "bg-pink-100 text-pink-600 border-pink-200",
   };
 
@@ -68,7 +72,10 @@ export const CourseCard = ({
             <span>Alta demanda</span>
           </div>
         </div>
-        <WhatsAppButton text="Quero Saber Mais" />
+        <WhatsAppButton
+          text="Quero Saber Mais"
+          message={`Olá! Vi o anúncio do ${programName} em ${cityName} e gostaria de saber mais sobre o curso ${title}.`}
+        />
       </div>
     </div>
   );

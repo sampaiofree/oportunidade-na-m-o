@@ -32,7 +32,7 @@ const Index = () => {
   // This handler now opens the WhatsApp link directly
   const handleAreaSelect = (area: string) => {
     setSelectedArea(area); // Still useful to visually track the selected button
-    const message = `Olá! Vi o anúncio do Portal da Profissão e tenho interesse na bolsa para a área de ${area}.`;
+    const message = `Olá! Vi o anúncio do ${programName} e tenho interesse na bolsa para a área de ${area}.`;
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
@@ -50,7 +50,7 @@ const Index = () => {
       </section>
 
       {/* Company Logos */}
-      <CompanyLogos />
+      {/* <CompanyLogos /> */}
 
       {/* Courses Section */}
       <CoursesSection />

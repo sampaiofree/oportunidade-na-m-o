@@ -1,13 +1,15 @@
 import { MessageCircle } from "lucide-react";
 import type { ReactNode } from "react";
-import { useSearchParams } from "react-router-dom";
 import { useCity } from "@/hooks/useCity";
+import { useProgramName } from "@/hooks/useProgramName";
+import { useWhatsAppNumber, sanitizeWhatsAppNumber } from "@/hooks/useWhatsAppNumber";
 
 interface WhatsAppButtonProps {
   variant?: "fixed" | "inline" | "hero";
   text?: string;
   className?: string;
   whatsappNumber?: string;
+  message?: string;
 }
 
 export const WhatsAppButton = ({ 
@@ -15,21 +17,19 @@ export const WhatsAppButton = ({
   text = "Falar no WhatsApp",
   className = "",
   whatsappNumber,
+  message,
 }: WhatsAppButtonProps) => {
   const { cityName } = useCity();
-  const [searchParams] = useSearchParams();
+  const { programName } = useProgramName();
+  const { whatsappNumber: urlWhatsAppNumber } = useWhatsAppNumber();
 
-  const sanitizeNumber = (raw?: string | null) => {
-    const digits = raw?.replace(/\D/g, "") ?? "";
-    return digits.length ? digits : "5511982672082";
-  };
+  const selectedNumber = whatsappNumber
+    ? sanitizeWhatsAppNumber(whatsappNumber)
+    : urlWhatsAppNumber;
 
-  const selectedNumber = sanitizeNumber(
-    whatsappNumber ?? searchParams.get("whatsapp")
-  );
-
-  const message = encodeURIComponent(`Olá! Vi o anúncio do Portal da Profissão em ${cityName} e gostaria de saber mais sobre as bolsas disponíveis.`);
-  const whatsappUrl = `https://wa.me/${selectedNumber}?text=${message}`;
+  const defaultMessage = `Olá! Vi o anúncio do ${programName} em ${cityName} e gostaria de saber mais sobre as bolsas disponíveis.`;
+  const encodedMessage = encodeURIComponent(message ?? defaultMessage);
+  const whatsappUrl = `https://wa.me/${selectedNumber}?text=${encodedMessage}`;
 
   if (variant === "fixed") {
     return (

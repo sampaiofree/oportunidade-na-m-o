@@ -3,6 +3,8 @@ import { useSearchParams } from "react-router-dom";
 import { WhatsAppButton } from "./WhatsAppButton";
 import { CountdownTimer } from "./CountdownTimer";
 import { useCity } from "@/hooks/useCity";
+import ShrinkToFit from "./ui/ShrinkToFit";
+import { useProgramName } from "@/hooks/useProgramName";
 
 type HeroSectionProps = {
   onCountdownEnd?: () => void;
@@ -11,6 +13,7 @@ type HeroSectionProps = {
 export const HeroSection = ({ onCountdownEnd }: HeroSectionProps) => {
   const { cityName, cityParam } = useCity();
   const [searchParams] = useSearchParams();
+  const { programName } = useProgramName();
 
   const scholarshipsNumber = (() => {
     const scholarshipsParam = searchParams.get("bolsas");
@@ -28,20 +31,23 @@ export const HeroSection = ({ onCountdownEnd }: HeroSectionProps) => {
     "Estude pelo celular, sem precisar de computador",
     "Certificado reconhecido em todo o Brasil",
     "Acesso vitalício ao curso escolhido",
-    "Garantia de 7 dias ou seu dinheiro de volta",
   ];
 
   return (
     <>
       <div className="sticky top-0 z-50 w-full bg-red-700 text-yellow-200 shadow-lg">
         <div className="container mx-auto px-4 py-3 flex flex-col items-center gap-2 text-center font-semibold tracking-tight text-sm md:text-base uppercase">
-          <div className="w-full max-w-3xl">
+          <div className="w-full">
             <span className="block w-full text-lg sm:text-xl md:text-2xl leading-tight">
-              Cursos profissionalizantes
+              {programName}
             </span>
-            <span className="block w-full text-base md:text-lg text-yellow-100">
-              liberados para {cityName}
-            </span>
+            <ShrinkToFit
+              className="text-yellow-100 w-full whitespace-nowrap"
+              maxFontSize={18}
+              minFontSize={6}
+            >
+              {`Liberado para ${cityName}`}
+            </ShrinkToFit>
           </div>
           <div className="w-full flex justify-center">
             <CountdownTimer 
@@ -62,23 +68,43 @@ export const HeroSection = ({ onCountdownEnd }: HeroSectionProps) => {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="animate-slide-up">
               {/* Main headline */}
-              <h1 className="mb-4">
-                <span className="inline-flex items-center gap-3 text-red-700 rounded-2xl px-5 py-3 font-extrabold text-[clamp(20px,5vw,38px)] max-w-4xl whitespace-nowrap overflow-hidden text-ellipsis">
-                  Atenção {cityName}
+              <h1 className="mb-4 space-y-1">
+                <span className="block text-2xl md:text-3xl font-bold tracking-tight text-foreground">
+                  Atenção
                 </span>
+                <ShrinkToFit
+                  className="text-foreground font-extrabold tracking-tight w-full"
+                  maxFontSize={35}
+                  minFontSize={6}
+                >
+                  {cityName}
+                </ShrinkToFit>
+                
               </h1>
-              <p className="text-xs sm:text-sm md:text-base text-muted-foreground font-medium mb-6">
-                {scholarshipsNumber.toLocaleString("pt-BR")} bolsas de estudo do Programa Nacional de Qualificação liberadas para {cityName}
-              </p>
 
-              {/* Subtitle */}
-              <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-xl">
-                Qualifique-se para o mercado de trabalho com cursos online em <strong>mais de 40 áreas</strong>. 
-                Vagas limitadas para moradores da região.
-              </p>
+              <div className="inline-flex items-center gap-2 bg-yellow-300 text-red-950 rounded-full px-3 py-1 mb-4 text-xs sm:text-sm font-semibold">
+                Liberadas {scholarshipsNumber.toLocaleString("pt-BR")} bolsas de estudo.
+              </div>
+
+              <div className="bg-card/80 border border-border rounded-2xl p-4 mb-4 max-w-2xl shadow-sm">
+                <p className="text-sm sm:text-base text-muted-foreground">
+                  O {programName} é de iniciativa privada, criado para ajudar jovens e adultos a se qualificarem e entrarem no mercado de trabalho.
+                </p>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-4 mb-8">
+                <a 
+                  href="#cursos"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full border-2 border-primary text-primary font-bold text-lg hover:bg-primary hover:text-primary-foreground transition-all"
+                >
+                  Ver Opções de Cursos
+                  <ArrowRight className="w-5 h-5" />
+                </a>
+              </div>
 
               {/* Benefits list */}
               <ul className="space-y-3 mb-8">
+                <p>Vagas 100% online para início imediato</p>
                 {benefits.map((benefit, index) => (
                   <li key={index} className="flex items-center gap-3">
                     <CheckCircle2 className="w-5 h-5 text-secondary flex-shrink-0" />
@@ -91,17 +117,11 @@ export const HeroSection = ({ onCountdownEnd }: HeroSectionProps) => {
 
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4">
+                <p>Verifique a disponibilidade no botão abaixo</p>
                 <WhatsAppButton 
                   variant="hero" 
                   text="Resgatar minha Bolsa via WhatsApp" 
                 />
-                <a 
-                  href="#cursos"
-                  className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full border-2 border-primary text-primary font-bold text-lg hover:bg-primary hover:text-primary-foreground transition-all"
-                >
-                  Ver Opções de Cursos
-                  <ArrowRight className="w-5 h-5" />
-                </a>
               </div>
 
               {/* Mobile indicator */}
